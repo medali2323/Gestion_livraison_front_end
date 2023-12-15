@@ -1,0 +1,85 @@
+<p>detailcolis works!</p>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Dashboard - SB Admin</title>
+       
+    </head>
+    <body class="sb-nav-fixed">
+        <app-nav></app-nav>
+          <div id="layoutSidenav">
+             <app-section></app-section>
+              <div id="layoutSidenav_content">
+                  <main>
+                    <div class="content mt-3">
+                        <div class="animated fadeIn">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <strong class="card-title">Détails Colis</strong>
+                                            <div style="float: right;">
+                                                <a href="mc_ajout_reclamation.php?pickup=338745725162" style="color: red; font-weight: bold; font-size: 20px;">+ Ajouter une reclamation</a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <!-- Credit Card -->
+                                            <div id="pay-invoice">
+                                                <div class="card-body">
+                                                            <div data-animate-end="animate-end" class="worker__item vcard">
+                                                            <div class="worker__intro">
+                                                                <div class="worker__post" style="font-size: 20px;">
+                                                                    <h3 style="text-align: center; padding: 20px;">{{ colis.code_colis }}</h3>
+                                                                  </div>
+                                                                  <div class="worker__post">Client: {{ colis.nom_clt }}</div>
+                                                                  <div class="worker__post">Adresse:  {{ colis.gouvernement }} {{ colis.ville }}{{ colis.adresse_clt }}</div>
+                                                                  <div class="worker__post">Téléphone: {{ colis.tel_clt }}</div>
+                                                                  <div class="worker__post">Nombre des articles: {{ colis.nb_article }}</div>
+                                                                  <div class="worker__post">Montant: {{ colis.prix }}</div>
+                                                                  <hr style="clear: both;">
+                                                                  <div class="worker__post">Date d'ajout: {{ colis.date | date:'yyyy-MM-dd' }}</div>
+                                                                  <hr style="clear: both;">
+                                                                  <div class="worker__intro-row">
+                                                                    <div class="worker__descr">
+                                                                      <p><strong>Commentaire:</strong> {{ colis.commentaire }}</p>
+                                                                    </div>
+                                                                  </div>
+                                                                <hr style="clear: both;">
+                                                                <div>
+                                                                    <table class="table table-bordered">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Etat</th>
+                                                                                <th>Date</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr *ngFor="let et of ListEtat">
+                                                                                <td>{{ et.code_etat__libelle }}</td>
+                                                                                <td>{{ et.date | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- .card -->
+                                </div>
+                            </div>
+                        </div><!-- .animated -->
+                    </div><!-- .content -->
+                  </main>
+              <app-footer></app-footer>
+              </div>
+          </div>
+  
+      </body>
+</html>

@@ -1,0 +1,18 @@
+/* Style pour la classe "etiquette" */
+.etiquette {
+    /* Ajoutez d'autres styles spécifiques si nécessaire */
+}
+
+/* Style pour la classe "bg-warning" de Bootstrap */
+.bg-warning {
+    background-color:darkkhaki !important;
+    /* !important peut être nécessaire pour remplacer les styles existants */
+}
+
+/* Style pour le texte à l'intérieur de la div */
+.text-light {
+    color: white; /* ou toute autre couleur de texte souhaitée */
+}
+.card-body {
+    width: 20%;
+}

@@ -1,0 +1,101 @@
+<p>add-etat works!</p>
+<p>detailcolis works!</p>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Dashboard - SB Admin</title>
+       
+    </head>
+    <body class="sb-nav-fixed">
+        <app-nav></app-nav>
+          <div id="layoutSidenav">
+             <app-section></app-section>
+              <div id="layoutSidenav_content">
+                <main>
+                    <form #f="ngForm" (ngSubmit)="save(f)">
+                      <div class="breadcrumbs">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="cc-number" class="control-label mb-1">choisir nouvelle Etat</label>
+                                <select name="etat" [(ngModel)]="selectedEtat" class="form-control" required>
+                                  <option disabled>Select Etat</option>
+                                  <option *ngFor="let etat of Listetat" [value]="etat.code_etat">{{ etat.libelle }}</option>
+                                </select>
+                                <div class="alert alert-danger" *ngIf="!selectedEtat">
+                                  L'etat est obligatoire.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="content mt-3">
+                        <div class="animated fadeIn">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="card">
+                                <div class="card-header">
+                                  <strong class="card-title">Liste des colis</strong>
+                                </div>
+                                <div class="card-body">
+                                  <table id="bootstrap-data-table-export" class="table table-striped table-bordered find-table">
+                                    <thead>
+                                      <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Code à barre</th>
+                                        <th>Nom</th>
+                                        <th>Adresse</th>
+                                        <th>Téléphone</th>
+                                        <th>Prix</th>
+                                        <th>Etat</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let colis of ListColis">
+                                        <td style="text-align: center; vertical-align: middle">
+                                          <input [(ngModel)]="colis.selected" type="checkbox" name="colis_select[]" value="{{ colis.id }}">
+                                        </td>
+                                        <td>{{ colis.date | date: 'yyyy-MM-dd' }}</td>
+                                        <td><a routerLink="/detail_pickup/{{ colis.id }}"><u>{{ colis.code_colis }}</u></a></td>
+                                        <td>{{ colis.nom_clt }}</td>
+                                        <td>  {{ colis.adresse_clt }} {{ colis.ville }} {{ colis.gouvernement }}</td>
+                                        <td>{{ colis.tel_clt }}</td>
+                                        <td>{{ colis.prix }}</td>
+                                        <td>{{colis.etat_colis.code_etat_colis}}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <div class="col-md-6">
+                                    <button class="btn btn-success" type="submit" [disabled]="!f.valid || !atLeastOneCheckboxSelected()">
+                                      <i class="fa fa-lock fa-lg"></i>&nbsp;
+                                      <span id="payment-button-amount">Ajouter</span>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div><!-- .animated -->
+                      </div><!-- .content -->
+                  
+                      <div class="alert alert-danger" *ngIf="!atLeastOneCheckboxSelected()">
+                        Il faut cocher au moins un colis
+                      </div>
+                    </form>
+                  </main>
+                  
+              <app-footer></app-footer>
+              </div>
+          </div>
+  
+      </body>
+</html>

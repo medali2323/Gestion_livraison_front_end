@@ -1,0 +1,26 @@
+<div class="product-list">
+    <table class="table">
+  
+        <tr class="thead-dark">
+            <td>{{ expediteur.code_expediteur }}</td>
+            <td>{{ expediteur.nom_expediteur }}</td>
+            <td>{{ expediteur.num_tel_expediteur }}</td>
+            <td>{{ expediteur.gouvernement }}</td>
+            <td>{{ expediteur.adresse }}</td>
+            <td>{{ expediteur.ville }}</td>
+            <td>{{ expediteur.code_tva }}</td>
+            <td>{{ expediteur.email }}</td>
+            <td>{{ expediteur.mode_paiement }}</td>
+            <td>{{ expediteur.frais_livraison }}</td>
+            <td>{{ expediteur.frais_retour }}</td>
+            <td>
+                      <button class="btn btn-success"
+                  (click)="modifier()">modifier</button>
+              <button class="btn btn-warning" (click)="supprumer()">supprumer</button>
+          
+            </td>
+        </tr>
+    </table>
+
+
+    

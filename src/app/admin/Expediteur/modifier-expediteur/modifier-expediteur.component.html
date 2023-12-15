@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="cincription" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard - SB Admin</title>
+</head>
+<body class="sb-nav-fixed">
+    <app-nav></app-nav>
+    <div id="layoutSidenav">
+        <app-section></app-section>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="content mt-3">
+                    <div class="animated fadeIn">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong class="card-title">Modifier Expéditeur</strong>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Modify Expediteur Form -->
+                                        <div id="modify-expediteur">
+                                            <div class="card-body">
+                                                <form #f="ngForm" (ngSubmit)="updateExpediteur(f)">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="nom_expediteur" class="control-label mb-1">Nom Expéditeur</label>
+                                                                <input name="nom_expediteur" type="text" class="form-control" ngModel required [value]="expediteur.nom_expediteur" pattern="[a-zA-Z ]*"  >
+                                                                <div class="alert alert-danger" *ngIf="f.controls['nom_expediteur'].invalid && f.controls['nom_expediteur'].touched">
+                                                                    <div *ngIf="f.controls['nom_expediteur'].hasError('required')">Le nom de l'expéditeur est obligatoire</div>
+                                                                    <div *ngIf="f.controls['nom_expediteur'].hasError('pattern')">Le nom doit être composé de lettres et d'espaces</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Add other form fields similar to the add expediteur form -->
+
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="gouvernement" class="control-label mb-1">Gouvernement</label>
+                                                                <select name="gouvernement" [(ngModel)]="selectedGouvernorat" (change)="loadville()" class="form-control">
+                                                                    <option disabled>Sélectionnez le Gouvernement</option>
+                                                                    <option *ngFor="let gouv of gouvernemants" [value]="gouv.id">{{ gouv.nom }}</option>
+                                                                </select>
+                                                                <div class="alert alert-danger" *ngIf="!selectedGouvernorat">
+                                                                    Le gouvernement est obligatoire.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="ville" class="control-label mb-1">Ville</label>
+                                                                <select name="ville" class="form-control" [(ngModel)]="selectedville">
+                                                                    <option *ngFor="let vll of villes" [value]="vll">
+                                                                        {{vll}}
+                                                                    </option>
+                                                                </select>
+                                                                <div class="alert alert-danger" *ngIf="!selectedville">
+                                                                    La ville est obligatoire.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="cc-number" class="control-label mb-1">Adresse</label>
+                                                                <textarea name="adresse" class="form-control cc-number identified visa" ngModel required [value]="expediteur.adresse"  ></textarea> 
+                                                                <div class="alert alert-danger" *ngIf="f.controls['adresse'].invalid && f.controls['adresse'].touched">
+                                                                    <div *ngIf="f.controls['adresse'].hasError('required')">L'adresse de l'expéditeur est obligatoire</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="num_tel_expediteur" class="control-label mb-1">Numéro de Téléphone</label>
+                                                                <input name="num_tel_expediteur" type="tel" class="form-control" [value]="expediteur.num_tel_expediteur" ngModel required #num_tel_expediteur="ngModel" pattern="[0-9]{8}">
+                                                            </div>
+                                                            <div class="alert alert-danger" *ngIf="num_tel_expediteur.invalid && num_tel_expediteur.touched">
+                                                                <div *ngIf="num_tel_expediteur.errors?.['required']"> Le numéro de téléphone est obligatoire</div>
+                                                                <div *ngIf="num_tel_expediteur.errors?.['pattern']"> Le numéro de téléphone doit être composé de 8 chiffres</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="code_tva" class="control-label mb-1">Code TVA</label>
+                                                                <input name="code_tva" type="text" class="form-control" [value]="expediteur.code_tva" ngModel required #code_tva="ngModel"pattern="[0-9]{8}">
+                                                            </div>
+                                                            <div class="alert alert-danger" *ngIf="code_tva.invalid && code_tva.touched">
+                                                                <div *ngIf="code_tva.errors?.['pattern']"> Le code TVA doit être composé de lettres et de chiffres et avoir une longueur de 11 caractères</div>
+                                                                <div *ngIf="code_tva.errors?.['required']"> Le code TVA est obligatoire</div>
+                        
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="cc-number" class="control-label mb-1">Email</label>
+                                                                <input name="email" type="email" class="form-control" ngModel  [value]="expediteur.email" #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                                                            </div>
+                                                            <div class="alert alert-danger" *ngIf="email.invalid && email.touched">
+                                                                <div *ngIf="email.errors?.['required']"> L'e-mail est obligatoire</div>
+                                                                <div *ngIf="email.errors?.['pattern']"> Veuillez saisir une adresse e-mail valide</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                        
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="frais_livraison" class="control-label mb-1">Frais de Livraison</label>
+                                                                <input name="frais_livraison" type="number" class="form-control"[value]="expediteur.frais_livraison" ngModel required #frais_livraison="ngModel">
+                                                            </div>
+                                                            <div class="alert alert-danger" *ngIf="frais_livraison.invalid && frais_livraison.touched">
+                                                                <div *ngIf="frais_livraison.errors?.['required']"> Les frais de livraison sont obligatoires</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="frais_retour" class="control-label mb-1">Frais de Retour</label>
+                                                                <input name="frais_retour" type="number" class="form-control"  [value]="expediteur.frais_retour" ngModel required #frais_retour="ngModel">
+                                                            </div>
+                                                            <div class="alert alert-danger" *ngIf="frais_retour.invalid && frais_retour.touched">
+                                                                <div *ngIf="frais_retour.errors?.['required']"> Les frais de retour sont obligatoires</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="col col-md-6">
+                                                                <label class="form-control-label">Mode de règlement</label>
+                                                            </div>
+                                                            <div class="col col-md-6">
+                                                                <div class="form-check">
+                                                                    <div class="radio">
+                                                                        <label for="radio1" class="form-check-label">
+                                                                            <input type="radio" id="radio1" value="Espèce" class="form-check-input" required name="mode_paiement" [(ngModel)]="selectedModePaiement" > Espèce
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="radio">
+                                                                        <label for="radio2" class="form-check-label">
+                                                                            <input type="radio" id="radio2" value="Virment" class="form-check-input" required name="mode_paiement" [(ngModel)]="selectedModePaiement"> Virment
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="alert alert-danger" *ngIf="!selectedModePaiement">
+                                                                        Le mode de paiement est obligatoire
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div style="margin-top: 30px">
+                                                        <button class="btn btn-success"  type="submit">
+                                                            <i class="fa fa-lock fa-lg"></i>&nbsp;
+                                                            <span id="payment-button-amount">Modifier Expéditeur</span>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- .animated -->
+                </div><!-- .content -->
+            </main>
+            <app-footer></app-footer>
+        </div>
+    </div>
+>

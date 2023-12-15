@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Dashboard - SB Admin</title>
+       
+    </head>
+    <body class="sb-nav-fixed">
+        <app-nav></app-nav>
+        <div id="layoutSidenav">
+           <app-section></app-section>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="content mt-3">
+                        <div class="animated fadeIn">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <strong class="card-title">Nouveau Pickup</strong>
+                                        </div>
+                                        <div class="card-body">
+                                            <!-- Credit Card -->
+                                            <div id="pay-invoice">
+                                                <div class="card-body">
+                                                    <form #f=ngForm (ngSubmit)="updatecolis(f)">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <div class="form-group">
+                                                                    <label for="cc-number" class="control-label mb-1">Nom complet</label>
+                                                                    <input name="nom_clt" type="text" class="form-control" [value]="colis.nom_clt" ngModel required #nom_clt=ngModel pattern="[a-zA-Z ]*">
+                                                                </div>
+                                                                <div class="alert alert-danger" *ngIf="nom_clt.invalid && nom_clt.touched">
+                                                                    <div *ngIf="nom_clt.errors?.['required']"> le nom de client est obligatoire</div>
+                                                                    <div *ngIf="nom_clt.errors?.['pattern']"> le nom doit etre des lettre</div>
+                                                                  </div>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="form-group">
+                                                                    <label for="cc-number" class="control-label mb-1">Gouvernerat</label>
+                                                                    
+                                                                    <select name="gouvernement" [(ngModel)]="selectedGouvernorat" (change)="loadville()" class="form-control">
+                                                                        <option disabled>Select Country</option>
+                                                                        <option *ngFor="let gouv of gouvernemants" [value]="gouv.id">{{ gouv.nom }}</option>
+                                                                    </select>
+                                                                    <div class="alert alert-danger" *ngIf="!selectedGouvernorat">
+                                                                        Le gouvernement est obligatoire.
+                                                                    </div>
+                                                                      
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="form-group" id="bloc_ville">
+                                                                    <label for="cc-number" class="control-label mb-1">Ville</label>
+                                                                    <select name="ville" class="form-control"name="ville" [(ngModel)]="selectedville">
+                                                                        <option *ngFor="let vll of villes"[value]="vll" >
+                                                                            {{vll }}
+                                                                          </option> 
+                                                                    </select>
+                                                                    <div class="alert alert-danger" *ngIf="!selectedville">
+                                                                        La ville est obligatoire.
+                                                                    </div>
+                                                                </div>
+                                                              
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="cc-number" class="control-label mb-1">Adresse complète et disponibilité</label>
+                                                                    <textarea name="adresse_clt" class="form-control cc-number identified visa" [value]="colis.adresse_clt" required="" ngModel required #adresse_clt=ngModel ></textarea>
+                                                                </div>
+                                                                <div class="alert alert-danger" *ngIf="adresse_clt.invalid && adresse_clt.touched">
+                                                                    <div *ngIf="adresse_clt.errors?.['required']"> l'adresse  de client est obligatoire</div>
+                                                                  </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="cc-number" class="control-label mb-1">Téléphone</label>
+                                                                    <input name="tel_clt" id="tel"  type="number" [value]="colis.tel_clt" class="form-control cc-number identified visa" placeholder=""  ngModel required #tel_clt=ngModel pattern="[0-9]{8}">
+                                                                    <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+                                                                </div>
+                                                                <div class="alert alert-danger" *ngIf="tel_clt.invalid && tel_clt.touched">
+                                                                    <div *ngIf="tel_clt.errors?.['required']"> le numero de client est obligatoire</div>
+                                                                    <div *ngIf="tel_clt.errors?.['pattern']"> le numero doit etre 8 chiffre</div>
+                                                                  </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="cc-number" class="control-label mb-1">Téléphone 2</label>
+                                                                    <input name="tel_clt2" id="tel2" type="number"[value]="colis.tel_clt2" class="form-control cc-number identified visa" placeholder="" ngModel  #tel_clt2=ngModel pattern="[0-9]{8}">
+                                                                    <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+                                                                </div>
+                                                                <div class="alert alert-danger" *ngIf="nom_clt.invalid && tel_clt2.touched">
+                                                                    <div *ngIf="tel_clt2.errors?.['pattern']"> le numero doit etre 8 chiffre</div>
+                                                                  </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12" id="cmd_verif">
+                                                            </div>
+                                                        </div>
+                                                     
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="cc-number" class="control-label mb-1">Désignation</label>
+                                                                    <input name="des" type="text"[value]="colis.des" class="form-control cc-number identified visa" placeholder=""  ngModel required #des=ngModel >
+                                                                    <span class="help-block" data-valmsg-for="cc-number"  data-valmsg-replace="true"></span>
+                                                                </div>
+                                                                <div class="alert alert-danger" *ngIf="des.invalid && des.touched">
+                                                                    <div *ngIf="des.errors?.['required']"> la Désignation de colis est obligatoire</div>
+                                                                  </div> 
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="cc-number" class="control-label mb-1">Nombre d'article</label>
+                                                                    <input name="nb_article" type="text"[value]="colis.nb_article" class="form-control cc-number identified visa" value="1"  ngModel required #nb_article=ngModel pattern="[0-9]">
+                                                                    <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+                                                                </div>
+                                                                <div class="alert alert-danger" *ngIf="nb_article.invalid && nb_article.touched">
+                                                                    <div *ngIf="nb_article.errors?.['required']"> le nembre de produit est obligatoire</div>
+                                                                    <div *ngIf="nb_article.errors?.['pattern']"> le nembre de produit doit  etre numeric</div>
+                                                                  </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="cc-number" class="control-label mb-1">Prix</label>
+                                                                    <input name="prix" type="text" [value]="colis.prix" class="form-control cc-number identified visa" placeholder="Prix en DT Exemple : 50.6"  ngModel required #prix=ngModel pattern="^\d+(\.\d{1,2})?$">
+                                                                    <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+                                                                </div>
+                                                                <div class="alert alert-danger" *ngIf="prix.invalid && prix.touched">
+                                                                    <div *ngIf="prix.errors?.['required']"> le prix est obligatoire</div>
+                                                                    <div *ngIf="prix.errors?.['pattern']"> le prix doit  etre numeric</div>
+                                                                  </div>
+                                                            </div>
+                                                            <div class="row form-group">
+                                                                <div class="col col-md-6"><label class=" form-control-label">Mode de reglement</label></div>
+                                                                <div class="col col-md-6">
+                                                                    <div class="form-check">
+                                                                        <div class="radio">
+                                                                            <label for="radio1" class="form-check-label">
+                                                                              <input type="radio" id="radio1" value="0"checked class="form-check-input" required name="mode_paiement" ngModel > Espèce
+                                                                            </label>
+                                                                          </div>
+                                                                          
+                                                                          <div class="radio">
+                                                                            <label for="radio2" class="form-check-label">
+                                                                              <input type="radio" id="radio2" name="mode_paiement" class="form-check-input" required ngModel> Chèque
+                                                                            </label>
+                                                                          </div>
+                                                                          
+                                                                          
+            
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+            
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="cc-number" class="control-label mb-1">Date</label>
+                                                                    <input id="daterange3" type="datetime-local" name="date" [value]="colis.date"  class="form-control" autocomplete="off" ngModel required #date="ngModel">
+                                                                    <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="form-group">
+                                                                    <label for="cc-number" class="control-label mb-1">Commentaire</label>
+                                                                    <textarea name="commentaire"[value]="colis.commentaire" class="form-control cc-number identified visa" ngModel  #commentaire=ngModel ></textarea>
+                                                                    <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+                                                                </div>
+                                                               
+                                                            </div>
+                                                        </div>
+            
+                                                        <div style="margin-top: 30px">
+                                                            <button class="btn btn-success" [disabled]="f.invalid" type="submit">
+                                                                <i class="fa fa-lock fa-lg"></i>&nbsp;
+                                                                <span id="payment-button-amount">Ajouter</span>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- .card -->
+                                </div>
+                            </div>
+                        </div><!-- .animated -->
+                    </div><!-- .content -->
+                </main>
+            <app-footer></app-footer>
+            </div>
+        </div>
+
+    </body>
+</html>

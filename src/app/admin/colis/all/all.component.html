@@ -1,0 +1,78 @@
+<p>add-etat works!</p>
+<p>detailcolis works!</p>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Dashboard - SB Admin</title>
+       
+    </head>
+    <body class="sb-nav-fixed">
+        <app-nav></app-nav>
+          <div id="layoutSidenav">
+             <app-section></app-section>
+              <div id="layoutSidenav_content">
+                  <main>
+                   
+                      
+                      
+                      <div class="content mt-3">
+                        <div class="animated fadeIn">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="card">
+                                <div class="card-header">
+                                  <strong class="card-title">Liste des colis en attente</strong>
+                                </div>
+                                <div class="card-body">
+                                  <table id="bootstrap-data-table-export" class="table table-striped table-bordered find-table">
+                                    <thead>
+                                      <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Code à barre</th>
+                                        <th>Nom</th>
+                                        <th>Adresse</th>
+                                        <th>Téléphone</th>
+                                        <th>Prix</th>
+                                        <th>Modifier</th>
+                                        <th>Imprimer</th>
+                                        
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let colis of ListColis">
+                                        <td style="text-align: center; vertical-align: middle">
+                                          <input [(ngModel)]="colis.selected" type="checkbox" name="colis_select[]" value="{{ colis.id }}">
+                                        </td>
+                                        <td>{{ colis.date | date: 'yyyy-MM-dd' }}</td>
+                                        <td><a routerLink="/detail_pickup/{{ colis.id }}"><u>{{ colis.code_colis }}</u></a></td>
+                                        <td>{{ colis.nom_clt }}</td>
+                                        <td>{{ colis.adresse_clt }}</td>
+                                        <td>{{ colis.tel_clt }}</td>
+                                        <td>{{ colis.prix }}</td>
+                                        <td><a class="btn btn-sm btn-success" routerLink="/modifier/{{ colis.id }}">Modifier</a></td>
+                                        <td><a class="btn btn-sm btn-primary" style="background: #22BCC9; border-color: #22BCC9;" routerLink="/imprimer_tout/{{ colis.id }}" target="_blank">Imprimer</a></td>
+                                       
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                      
+                          </div>
+                        </div><!-- .animated -->
+                      </div><!-- .content -->
+                      
+                  </main>
+              <app-footer></app-footer>
+              </div>
+          </div>
+  
+      </body>
+</html>

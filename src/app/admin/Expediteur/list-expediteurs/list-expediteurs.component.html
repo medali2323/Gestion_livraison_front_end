@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Dashboard - SB Admin</title>
+       
+    </head>
+    <body class="sb-nav-fixed">
+       <app-nav></app-nav>
+        <div id="layoutSidenav">
+        <app-section></app-section>
+  
+            <div id="layoutSidenav_content">
+                <main>
+                  <div class="container mt-4">
+                    <table  class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Code</th>
+                          <th>Nom</th>
+                          <th>Numéro de téléphone</th>
+                          <th>Gouvernement</th>
+                          <th>Adresse</th>
+                          <th>Ville</th>
+                          <th>Code TVA</th>
+                          <th>Email</th>
+                          <th>Mode de paiement</th>
+                          <th>Frais de livraison</th>
+                          <th>Frais de retour</th>
+                          <th [colSpan]="2">Action</th>
+                        </tr>
+                      </thead>      
+                                  </table>
+
+                      <app-one-expediteur *ngFor="let expediteur of ListExpediteur" [expediteur]="expediteur"(updateEvent)="modifierr($event)" (deleteEvent)="spp($event)"></app-one-expediteur>
+                  </div>
+                </main>
+                <app-footer></app-footer>
+            </div>
+        </div>
+
+    </body>
+</html>

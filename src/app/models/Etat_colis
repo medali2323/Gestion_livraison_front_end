@@ -1,0 +1,21 @@
+import { Etat } from "./Etat";
+import { Livreur } from "./Livreur";
+import { Colis } from "./Colis";
+
+export class EtatColis {
+  code_etat_colis: number;
+  code_colis: Colis;
+  code_etat: Etat;
+  code_livreur: Livreur | null;
+  date: string; 
+  commentaire: string | null;
+
+  constructor(data: any) {
+    this.code_etat_colis = data.code_etat_colis;
+    this.code_colis = new Colis(data.code_colis);
+    this.code_etat = new Etat(data.code_etat);
+    this.code_livreur = data.code_livreur ? new Livreur(data.code_livreur) : null;
+    this.date = data.date;
+    this.commentaire = data.commentaire;
+  }
+}
